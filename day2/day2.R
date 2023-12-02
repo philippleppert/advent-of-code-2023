@@ -20,15 +20,15 @@ games <-
 
 # will use tidyr for working with list
 games_df <- 
-  tibble(bags) %>%
+  tibble(games) %>%
   mutate(game_id = row_number())
  
 # unnest
 games_df_mod <- 
   games_df %>%
-  unnest(cols = c(bags)) %>%
-  unnest(cols = c(bags)) %>%
-  unnest_wider(bags, names_repair = ~c("count", "color","game_id")) %>%
+  unnest(cols = c(games)) %>%
+  unnest(cols = c(games)) %>%
+  unnest_wider(games, names_repair = ~c("count", "color","game_id")) %>%
   suppressMessages() %>%
   mutate(count = as.numeric(count))
 
@@ -42,5 +42,5 @@ games_df_check <-
     )
 
 # match ids against all games and sum
-setdiff(game_mod$game_id, game_check$game_id) %>% sum
+setdiff(games_df_mod$game_id, games_df_check$game_id) %>% sum
 
