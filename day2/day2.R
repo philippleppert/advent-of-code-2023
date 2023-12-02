@@ -44,3 +44,19 @@ games_df_check <-
 # match ids against all games and sum
 setdiff(games_df_mod$game_id, games_df_check$game_id) %>% sum
 
+# part 2
+games_df_req <- 
+  games_df_mod %>%
+  # store counts in list column
+  group_by(game_id, color) %>%
+  summarise(count_list = list(count)) %>%
+  ungroup() %>%
+  # find max per color
+  mutate(min_req = map_dbl(count_list, ~max(.x))) %>%
+  # calculate product
+  group_by(game_id) %>%
+  summarise(product = prod(min_req)) %>%
+  ungroup()
+
+# sum of product values
+sum(games_df_req$product)  
