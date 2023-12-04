@@ -46,7 +46,20 @@ test <-
     )
 
 # sum
-test %>%
-  summarise( sum_points = sum(points))
+test$points %>% sum()
 
+# part 2
+test2 <-
+  test %>%
+  mutate(copies = 0)
 
+for (i in seq_along(test2$sum_matches)){
+  if (test2$sum_matches[i] != 0){
+   for (j in 1:test2$sum_matches[i]){
+      j <- j + i
+      test2$copies[j] <- test2$copies[j] + (test2$copies[i] + 1)
+    }
+  }
+}
+
+test2$copies %>% sum() + 206 # initial cards
