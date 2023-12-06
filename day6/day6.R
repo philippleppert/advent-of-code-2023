@@ -21,3 +21,13 @@ compare_list <- map(1:4, ~which(total_distance_list[[.x]] > record_distances[.x]
 
 # obtain product
 map(compare_list, ~length(.x)) %>% unlist %>% prod()
+
+# part 2 ----
+times_kerning <- 0:str_c(times, collapse = "") %>% as.numeric
+record_distances_kerning <- str_c(record_distances, collapse = "") %>% as.numeric
+
+# distance
+kerning_dist <- total_dist(times_kerning)
+
+# ways to beat the record in this one much longer race
+which(kerning_dist > record_distances_kerning) %>% length
